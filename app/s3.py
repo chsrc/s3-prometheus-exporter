@@ -47,3 +47,4 @@ class S3Client:
             self.get_bucket_stats(bucket)
             for bucket in self.list_buckets()
         ]
+    
