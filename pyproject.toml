@@ -27,3 +27,6 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 88
+
+[tool.setuptools.packages.find]
+include = ["app*"]

@@ -12,6 +12,4 @@ RUN pip install --no-cache-dir .
 
 USER nobody
 
-EXPOSE 8000
-
 CMD ["s3-prometheus-exporter"]

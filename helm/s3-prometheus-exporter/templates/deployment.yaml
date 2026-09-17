@@ -26,13 +26,19 @@ spec:
 
           ports:
             - name: metrics
-              containerPort: 8000
+              containerPort: {{ .Values.service.port}}
               protocol: TCP
 
           env:
+            - name: METRICS_PORT
+              value: {{ .Values.service.port | quote }}
+
             - name: SCAN_INTERVAL_SECONDS
               value: {{ .Values.scanIntervalSeconds | quote }}
 
+            - name: FAKE_S3
+              value: {{ .Values.debug.fakeS3 | quote }} 
+          
             {{- if .Values.aws.region }}
             - name: AWS_REGION
               value: {{ .Values.aws.region | quote }}
@@ -69,4 +75,3 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      

@@ -12,9 +12,13 @@ serviceAccount:
 
 service:
   type: ClusterIP
-  port: 8000
+  port: 9222
 
 scanIntervalSeconds: 900
+
+debug: 
+  #if true, instead of using S3 metrics, it just returns mock data
+  fakeS3: false
 
 aws:
   region: ""

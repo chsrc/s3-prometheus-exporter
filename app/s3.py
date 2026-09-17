@@ -47,4 +47,19 @@ class S3Client:
             self.get_bucket_stats(bucket)
             for bucket in self.list_buckets()
         ]
-    
+
+
+class FakeS3Client:
+    def collect(self) -> list[BucketStats]:
+        return [
+            BucketStats(
+                name="example-data",
+                object_count=1234,
+                size_bytes=1024 * 1024 * 512,
+            ),
+            BucketStats(
+                name="example-backups",
+                object_count=5678,
+                size_bytes=1024 * 1024 * 1024 * 12,
+            ),
+        ]
