@@ -12,4 +12,6 @@ RUN pip install --no-cache-dir .
 
 USER nobody
 
+LABEL org.opencontainers.image.source=https://github.com/chsrc/S3-prometheus-exporter
+
 CMD ["s3-prometheus-exporter"]
