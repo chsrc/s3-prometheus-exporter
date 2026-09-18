@@ -14,3 +14,4 @@ def test_update_metrics():
     update_metrics(stats)
 
     assert True
+    
