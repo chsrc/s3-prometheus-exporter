@@ -25,12 +25,16 @@ debug:
   fakeS3: false
 
 aws:
+  endpoint: ""
   region: ""
+  signatureVersion: "v4"
+  s3ForcePathStyle: true
+  insecureSkipVerify: true
 
   credentials:
-    secretName: s3-exporter-s3-creds
-    accessKeyIdKey: AWS_ACCESS_KEY_ID
-    secretAccessKeyKey: AWS_SECRET_ACCESS_KEY
+    secretName: ""
+    accessKeyIdKey: ""
+    secretAccessKeyKey: ""
 
 resources:
   requests:
