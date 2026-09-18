@@ -27,6 +27,11 @@ debug:
 aws:
   region: ""
 
+  credentials:
+    secretName: s3-exporter-s3-creds
+    accessKeyIdKey: AWS_ACCESS_KEY_ID
+    secretAccessKeyKey: AWS_SECRET_ACCESS_KEY
+
 resources:
   requests:
     cpu: 50m
