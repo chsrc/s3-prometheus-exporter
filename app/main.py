@@ -21,8 +21,13 @@ def main() -> None:
         s3 = FakeS3Client()
     else:
         logging.info("Using real S3 client")
+
         s3 = S3Client(
             region_name=settings.aws_region,
+            endpoint_url=settings.aws_endpoint,
+            signature_version=settings.aws_signature_version,
+            force_path_style=settings.aws_s3_force_path_style,
+            insecure_skip_verify=settings.aws_insecure_skip_verify,
         )
 
     collector = Collector(s3)

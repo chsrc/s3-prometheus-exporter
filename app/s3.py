@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 import boto3
+from botocore.config import Config
 
 
 @dataclass
@@ -11,10 +12,31 @@ class BucketStats:
 
 
 class S3Client:
-    def __init__(self, region_name: str | None = None):
+    def __init__(
+        self,
+        region_name: str | None = None,
+        endpoint_url: str | None = None,
+        signature_version: str = "v4",
+        force_path_style: bool = False,
+        insecure_skip_verify: bool = False,
+    ):
+        addressing_style = (
+            "path" if force_path_style else "auto"
+        )
+
+        config = Config(
+            signature_version=signature_version,
+            s3={
+                "addressing_style": addressing_style,
+            },
+        )
+
         self.client = boto3.client(
             "s3",
             region_name=region_name,
+            endpoint_url=endpoint_url,
+            verify=not insecure_skip_verify,
+            config=config,
         )
 
     def list_buckets(self) -> list[str]:
@@ -29,7 +51,9 @@ class S3Client:
         object_count = 0
         size_bytes = 0
 
-        paginator = self.client.get_paginator("list_objects_v2")
+        paginator = self.client.get_paginator(
+            "list_objects_v2"
+        )
 
         for page in paginator.paginate(Bucket=bucket):
             for obj in page.get("Contents", []):
