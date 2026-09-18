@@ -1,7 +1,11 @@
 replicaCount: 1
 
+nameOverride: ""
+
+fullnameOverride: ""
+
 image:
-  repository: ghcr.io/chsrc/s3-prometheus-exporter
+  repository: ghcr.io/example/s3-prometheus-exporter
   tag: "latest"
   pullPolicy: IfNotPresent
 
