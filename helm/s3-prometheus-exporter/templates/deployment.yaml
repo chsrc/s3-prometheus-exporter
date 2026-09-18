@@ -39,6 +39,25 @@ spec:
             - name: FAKE_S3
               value: {{ .Values.debug.fakeS3 | quote }}
 
+            {{- if .Values.aws.endpoint }}
+            - name: AWS_ENDPOINT
+              value: {{ .Values.aws.endpoint | quote }}
+            {{- end }}
+
+            {{- if .Values.aws.region }}
+            - name: AWS_REGION
+              value: {{ .Values.aws.region | quote }}
+            {{- end }}
+
+            - name: AWS_SIGNATURE_VERSION
+              value: {{ .Values.aws.signatureVersion | quote }}
+
+            - name: AWS_S3_FORCE_PATH_STYLE
+              value: {{ .Values.aws.s3ForcePathStyle | quote }}
+
+            - name: AWS_INSECURE_SKIP_VERIFY
+              value: {{ .Values.aws.insecureSkipVerify | quote }}
+
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -50,7 +69,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.aws.credentials.secretName }}
                   key: {{ .Values.aws.credentials.secretAccessKeyKey }}
-
+                  
             {{- if .Values.aws.region }}
             - name: AWS_REGION
               value: {{ .Values.aws.region | quote }}
