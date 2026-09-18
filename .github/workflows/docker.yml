@@ -43,3 +43,23 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Log in to GHCR for Helm
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | \
+            helm registry login ghcr.io \
+            --username "${{ github.actor }}" \
+            --password-stdin
+
+      - name: Package Helm chart
+        run: |
+          helm package helm/s3-prometheus-exporter
+
+      - name: Push Helm chart
+        run: |
+          helm push s3-prometheus-exporter-0.1.0.tgz \
+            oci://ghcr.io/chsrc/charts
+            
