@@ -9,6 +9,7 @@ class BucketStats:
     name: str
     object_count: int
     size_bytes: int
+    last_modified_timestamp: float | None
 
 
 class S3Client:
@@ -50,20 +51,30 @@ class S3Client:
     def get_bucket_stats(self, bucket: str) -> BucketStats:
         object_count = 0
         size_bytes = 0
+        last_modified_timestamp = None
 
-        paginator = self.client.get_paginator(
-            "list_objects_v2"
-        )
+        paginator = self.client.get_paginator("list_objects_v2")
 
         for page in paginator.paginate(Bucket=bucket):
             for obj in page.get("Contents", []):
                 object_count += 1
                 size_bytes += obj.get("Size", 0)
 
+                last_modified = obj.get("LastModified")
+                if last_modified is not None:
+                    timestamp = last_modified.timestamp()
+
+                    if (
+                        last_modified_timestamp is None
+                        or timestamp > last_modified_timestamp
+                    ):
+                        last_modified_timestamp = timestamp
+
         return BucketStats(
             name=bucket,
             object_count=object_count,
             size_bytes=size_bytes,
+            last_modified_timestamp=last_modified_timestamp,
         )
 
     def collect(self) -> list[BucketStats]:
