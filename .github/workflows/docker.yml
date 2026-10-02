@@ -60,6 +60,6 @@ jobs:
 
       - name: Push Helm chart
         run: |
-          helm push s3-prometheus-exporter-0.1.0.tgz \
+          helm push s3-prometheus-exporter-1.0.0.tgz \
             oci://ghcr.io/chsrc/charts
             
