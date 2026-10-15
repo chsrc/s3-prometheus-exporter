@@ -3,5 +3,5 @@ name: s3-prometheus-exporter
 description: Prometheus exporter for Amazon S3 bucket statistics
 type: application
 
-version: 1.0.1
-appVersion: "1.0.1"
+version: 1.0.2
+appVersion: "1.0.2"
